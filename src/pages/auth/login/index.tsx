@@ -14,6 +14,7 @@ import { useAuth } from '../../../hooks/auth';
 import { useEffect, useState } from 'react';
 import AuthLayout from '../../../components/Layouts/AuthLayout';
 import { AuthContentContainer, AuthImageContainer } from '../styles';
+import { ErrorsProps } from '../../../types';
 
 const Login = () => {
     const router = useRouter();
@@ -26,11 +27,14 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [shouldRemember, setShouldRemember] = useState(false);
-    const [errors, setErrors] = useState([]);
+    const [errors, setErrors] = useState<ErrorsProps>();
     const [status, setStatus] = useState(null);
 
     useEffect(() => {
-        if (router.query.reset?.length > 0 && errors.length === 0) {
+        if (
+            router.query.reset?.length > 0 &&
+            Object.keys(errors).length === 0
+        ) {
             // @ts-ignore
             setStatus(atob(router.query.reset));
         } else {
@@ -48,13 +52,15 @@ const Login = () => {
             setErrors,
             setStatus,
         });
+
+        console.log(typeof errors);
     };
 
     return (
         <AuthLayout>
             <AuthContentContainer>
                 {/* Session Status */}
-                <AuthSessionStatus className={''} status={status} />
+                <AuthSessionStatus status={status} />
 
                 {/* <ApplicationLogo /> */}
                 <Image src={Logo} width={155} height={120} />
@@ -73,7 +79,7 @@ const Login = () => {
                             autoFocus
                         />
 
-                        {/* <InputError messages={errors.email} /> */}
+                        <InputError messages={errors.email} />
                     </div>
 
                     {/* Password */}
@@ -89,7 +95,7 @@ const Login = () => {
                             autoComplete="current-password"
                         />
 
-                        {/* <InputError messages={errors.password} /> */}
+                        <InputError messages={errors.password} />
                     </div>
 
                     {/* Remember Me */}
