@@ -1,13 +1,14 @@
-import ApplicationLogo from '@/components/ApplicationLogo';
+import ApplicationLogo from '../../../components/ApplicationLogo';
 
-import Input from '@/components/Input';
-import InputError from '@/components/InputError';
-import Label from '@/components/Label';
+import Input from '../../../components/Input';
+import InputError from '../../../components/InputError';
+import Label from '../../../components/Label';
 import Link from 'next/link';
-import { useAuth } from '@/hooks/auth';
+import { useAuth } from '../../../hooks/auth';
 import { useState } from 'react';
-import AuthLayout from '@/components/Layouts/AuthLayout';
+import AuthLayout from '../../../components/Layouts/AuthLayout';
 import { AuthContentContainer, AuthImageContainer } from '../styles';
+import { ErrorsProps } from '../../../types';
 
 const Register = () => {
     const { register } = useAuth({
@@ -20,7 +21,7 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
-    const [errors, setErrors] = useState([]);
+    const [errors, setErrors] = useState<ErrorsProps>();
 
     const submitForm = event => {
         event.preventDefault();

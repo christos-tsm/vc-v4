@@ -33,7 +33,7 @@ const Login = () => {
     useEffect(() => {
         if (
             router.query.reset?.length > 0 &&
-            Object.keys(errors).length === 0
+            Object.keys(errors)?.length === 0
         ) {
             // @ts-ignore
             setStatus(atob(router.query.reset));
@@ -79,7 +79,7 @@ const Login = () => {
                             autoFocus
                         />
 
-                        <InputError messages={errors.email} />
+                        <InputError messages={errors?.email} />
                     </div>
 
                     {/* Password */}
@@ -95,7 +95,7 @@ const Login = () => {
                             autoComplete="current-password"
                         />
 
-                        <InputError messages={errors.password} />
+                        <InputError messages={errors?.password} />
                     </div>
 
                     {/* Remember Me */}

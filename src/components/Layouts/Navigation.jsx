@@ -1,8 +1,8 @@
-import ApplicationLogo from '@/components/ApplicationLogo';
+import ApplicationLogo from '../../components/ApplicationLogo';
 import Link from 'next/link';
-import NavLink from '@/components/NavLink';
+import NavLink from '../../components/NavLink';
 
-import { useAuth } from '@/hooks/auth';
+import { useAuth } from '../../hooks/auth';
 import { useRouter } from 'next/router';
 
 const Navigation = ({ user }) => {
