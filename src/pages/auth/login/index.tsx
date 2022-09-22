@@ -1,15 +1,19 @@
-import ApplicationLogo from '@/components/ApplicationLogo';
-
-import AuthSessionStatus from '@/components/AuthSessionStatus';
-
-import Input from '@/components/Input';
-import InputError from '@/components/InputError';
-import Label from '@/components/Label';
-import Link from 'next/link';
-import { useAuth } from '@/hooks/auth';
-import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
-import AuthLayout from '@/components/Layouts/AuthLayout';
+
+// import ApplicationLogo from '../components/ApplicationLogo';
+import AuthSessionStatus from '../../../components/AuthSessionStatus';
+import Logo from '../../../../public/images/logo.svg';
+import AuthImage from '../../../../public/images/default.jpg';
+
+import Input from '../../../components/Input';
+import InputError from '../../../components/InputError';
+import Label from '../../../components/Label';
+import Link from 'next/link';
+import { useAuth } from '../../../hooks/auth';
+import { useEffect, useState } from 'react';
+import AuthLayout from '../../../components/Layouts/AuthLayout';
+import { AuthContentContainer, AuthImageContainer } from '../styles';
 
 const Login = () => {
     const router = useRouter();
@@ -27,6 +31,7 @@ const Login = () => {
 
     useEffect(() => {
         if (router.query.reset?.length > 0 && errors.length === 0) {
+            // @ts-ignore
             setStatus(atob(router.query.reset));
         } else {
             setStatus(null);
@@ -47,9 +52,12 @@ const Login = () => {
 
     return (
         <AuthLayout>
-            <div>
+            <AuthContentContainer>
                 {/* Session Status */}
-                <AuthSessionStatus status={status} />
+                <AuthSessionStatus className={''} status={status} />
+
+                {/* <ApplicationLogo /> */}
+                <Image src={Logo} width={155} height={120} />
 
                 <form onSubmit={submitForm}>
                     {/* Email Address */}
@@ -65,7 +73,7 @@ const Login = () => {
                             autoFocus
                         />
 
-                        <InputError messages={errors.email} />
+                        {/* <InputError messages={errors.email} /> */}
                     </div>
 
                     {/* Password */}
@@ -81,7 +89,7 @@ const Login = () => {
                             autoComplete="current-password"
                         />
 
-                        <InputError messages={errors.password} />
+                        {/* <InputError messages={errors.password} /> */}
                     </div>
 
                     {/* Remember Me */}
@@ -108,10 +116,10 @@ const Login = () => {
                         <button>Login</button>
                     </div>
                 </form>
-            </div>
-            <div>
-                <h2>eikona</h2>
-            </div>
+            </AuthContentContainer>
+            <AuthImageContainer>
+                <Image layout="fill" src={AuthImage} />
+            </AuthImageContainer>
         </AuthLayout>
     );
 };

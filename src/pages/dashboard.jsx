@@ -1,3 +1,4 @@
+import React from 'react';
 import AppLayout from '@/components/Layouts/AppLayout';
 import Head from 'next/head';
 
@@ -9,7 +10,7 @@ const Dashboard = () => {
             </Head>
 
             <div>
-                <h1>You're logged in!</h1>
+                <h1>You&apos;re logged in!</h1>
             </div>
         </AppLayout>
     );

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useAuth } from '@/hooks/auth';
 import { useState } from 'react';
 import AuthLayout from '@/components/Layouts/AuthLayout';
+import { AuthContentContainer, AuthImageContainer } from '../styles';
 
 const Register = () => {
     const { register } = useAuth({
@@ -36,7 +37,7 @@ const Register = () => {
 
     return (
         <AuthLayout>
-            <div>
+            <AuthContentContainer>
                 <form onSubmit={submitForm}>
                     {/* Name */}
                     <div>
@@ -127,8 +128,8 @@ const Register = () => {
                         <button>Register</button>
                     </div>
                 </form>
-            </div>
-            <div>Eikona</div>
+            </AuthContentContainer>
+            <AuthImageContainer>Eikona</AuthImageContainer>
         </AuthLayout>
     );
 };
