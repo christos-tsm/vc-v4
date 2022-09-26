@@ -1,9 +1,11 @@
+import { InputErrorEl } from './styles';
+
 const InputError = ({ messages }) => (
     <>
         {messages?.length > 0 && (
             <>
                 {messages?.map((message, index) => (
-                    <p key={index}>{message}</p>
+                    <InputErrorEl key={index}>{message}</InputErrorEl>
                 ))}
             </>
         )}

@@ -1,14 +1,26 @@
-import ApplicationLogo from '../../../components/ApplicationLogo';
+import LogoSolid from '../../../../public/images/logo-solid.svg';
+import AuthImage from '../../../../public/images/default.jpg';
+import Logo from '../../../../public/images/logo.svg';
 
 import Input from '../../../components/Input';
 import InputError from '../../../components/InputError';
-import Label from '../../../components/Label';
 import Link from 'next/link';
 import { useAuth } from '../../../hooks/auth';
 import { useState } from 'react';
 import AuthLayout from '../../../components/Layouts/AuthLayout';
-import { AuthContentContainer, AuthImageContainer } from '../styles';
+import {
+    AuthContent,
+    AuthContentContainer,
+    AuthImageContainer,
+    AuthImageContent,
+    AuthImageOverlay,
+} from '../styles';
 import { ErrorsProps } from '../../../types';
+import Image from 'next/image';
+import { Form } from '../../../theme/forms';
+import { InputContainer } from '../../../components/Input/styles';
+import Button from '../../../components/Button';
+import { PageTitle, Paragraph } from '../../../theme/typography';
 
 const Register = () => {
     const { register } = useAuth({
@@ -22,11 +34,13 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [errors, setErrors] = useState<ErrorsProps>();
+    const [loading, setLoading] = useState(false);
 
-    const submitForm = event => {
-        event.preventDefault();
+    const submitForm = async e => {
+        e.preventDefault();
+        setLoading(true);
 
-        register({
+        await register({
             firstName,
             lastName,
             email,
@@ -34,103 +48,144 @@ const Register = () => {
             password_confirmation: passwordConfirmation,
             setErrors,
         });
+
+        setLoading(false);
     };
 
     return (
         <AuthLayout>
             <AuthContentContainer>
-                <form onSubmit={submitForm}>
-                    {/* Name */}
-                    <div>
-                        <Label htmlFor="firstName">First Name</Label>
+                <Image src={Logo} width={165} height={124} />
 
-                        <Input
-                            id="firstName"
-                            type="text"
-                            value={firstName}
-                            onChange={event => setFirstName(event.target.value)}
-                            required
-                            autoFocus
-                        />
+                <AuthContent>
+                    <PageTitle font900>Σύνδεση</PageTitle>
+                    <Paragraph>
+                        Συμπληρώστε την παρακάτω φόρμα, για να δημιουργήσετε τον
+                        λογαριασμό σας.
+                        <br />
+                        Εάν έχετε ήδη λογαριασμό, πατήστε{' '}
+                        <Link href="/auth/login">εδώ</Link>
+                    </Paragraph>
 
-                        <InputError messages={errors.name} />
-                    </div>
+                    <Form onSubmit={submitForm}>
+                        {/* Name */}
+                        <InputContainer>
+                            <Input
+                                id="firstName"
+                                type="text"
+                                value={firstName}
+                                onChange={event =>
+                                    setFirstName(event.target.value)
+                                }
+                                required
+                                placeholder="Όνομα"
+                            />
 
-                    <div>
-                        <Label htmlFor="lastName">Last Name</Label>
+                            <InputError messages={errors?.name} />
+                        </InputContainer>
 
-                        <Input
-                            id="lastName"
-                            type="text"
-                            value={lastName}
-                            onChange={event => setLastName(event.target.value)}
-                            required
-                            autoFocus
-                        />
+                        <InputContainer>
+                            <Input
+                                id="lastName"
+                                type="text"
+                                value={lastName}
+                                onChange={event =>
+                                    setLastName(event.target.value)
+                                }
+                                required
+                                placeholder="Επίθετο"
+                            />
 
-                        <InputError messages={errors.name} />
-                    </div>
+                            <InputError messages={errors?.name} />
+                        </InputContainer>
 
-                    {/* Email Address */}
-                    <div>
-                        <Label htmlFor="email">Email</Label>
+                        {/* Email Address */}
+                        <InputContainer>
+                            <Input
+                                id="email"
+                                type="email"
+                                value={email}
+                                onChange={event => setEmail(event.target.value)}
+                                required
+                                placeholder="Email"
+                            />
 
-                        <Input
-                            id="email"
-                            type="email"
-                            value={email}
-                            onChange={event => setEmail(event.target.value)}
-                            required
-                        />
+                            <InputError messages={errors?.email} />
+                        </InputContainer>
 
-                        <InputError messages={errors.email} />
-                    </div>
+                        {/* Password */}
+                        <InputContainer>
+                            <Input
+                                id="password"
+                                type="password"
+                                value={password}
+                                onChange={event =>
+                                    setPassword(event.target.value)
+                                }
+                                required
+                                autoComplete="new-password"
+                                placeholder="Κωδικός"
+                            />
 
-                    {/* Password */}
-                    <div>
-                        <Label htmlFor="password">Password</Label>
+                            <InputError messages={errors?.password} />
+                        </InputContainer>
 
-                        <Input
-                            id="password"
-                            type="password"
-                            value={password}
-                            onChange={event => setPassword(event.target.value)}
-                            required
-                            autoComplete="new-password"
-                        />
+                        {/* Confirm Password */}
+                        <InputContainer>
+                            <Input
+                                id="passwordConfirmation"
+                                type="password"
+                                value={passwordConfirmation}
+                                onChange={event =>
+                                    setPasswordConfirmation(event.target.value)
+                                }
+                                required
+                                placeholder="Επιβεβαίωση κωδικού"
+                            />
 
-                        <InputError messages={errors.password} />
-                    </div>
+                            <InputError
+                                messages={errors?.password_confirmation}
+                            />
+                        </InputContainer>
 
-                    {/* Confirm Password */}
-                    <div>
-                        <Label htmlFor="passwordConfirmation">
-                            Confirm Password
-                        </Label>
-
-                        <Input
-                            id="passwordConfirmation"
-                            type="password"
-                            value={passwordConfirmation}
-                            onChange={event =>
-                                setPasswordConfirmation(event.target.value)
-                            }
-                            required
-                        />
-
-                        <InputError messages={errors.password_confirmation} />
-                    </div>
-
-                    <div>
-                        <Link href="/login">
-                            <a>Already registered?</a>
-                        </Link>
-
-                        <button>Register</button>
-                    </div>
-                </form>
+                        <div>
+                            <Button
+                                disabled={loading}
+                                text={
+                                    loading ? 'Γίνεται εγγραφή...' : 'Εγγραφή'
+                                }
+                                variation="primary"
+                                type="submit"
+                            />
+                        </div>
+                    </Form>
+                </AuthContent>
+                <ul>
+                    <li>
+                        <Link href="#!">Πολιτική απορρήτου</Link>
+                        <Link href="#!">Όροι χρήσης</Link>
+                    </li>
+                </ul>
             </AuthContentContainer>
-            <AuthImageContainer>Eikona</AuthImageContainer>
+            <AuthImageContainer>
+                <Image layout="fill" src={AuthImage} priority />
+                <AuthImageOverlay>
+                    <AuthImageContent>
+                        <Image
+                            src={LogoSolid}
+                            width={130}
+                            height={160}
+                            objectFit="contain"
+                        />
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Cum, fuga ipsam nulla optio accusantium alias
+                            ut hic iste molestiae consequuntur saepe ullam quo,
+                            dolor perferendis delectus quasi nemo vero quae?
+                        </p>
+                    </AuthImageContent>
+                </AuthImageOverlay>
+            </AuthImageContainer>
         </AuthLayout>
     );
 };
