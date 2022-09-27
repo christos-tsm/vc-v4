@@ -5,3 +5,11 @@ export const Form = styled.form`
     flex-direction: column;
     gap: 20px;
 `;
+
+export const InputRow = styled.div`
+    display: flex;
+    gap: 20px;
+    & > div {
+        flex: 1;
+    }
+`;

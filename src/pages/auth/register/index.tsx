@@ -14,10 +14,12 @@ import {
     AuthImageContainer,
     AuthImageContent,
     AuthImageOverlay,
+    CheckboxesContainer,
+    InputCheckboxContainer,
 } from '../styles';
-import { ErrorsProps } from '../../../types';
+import { ErrorsProps } from '../../../interfaces';
 import Image from 'next/image';
-import { Form } from '../../../theme/forms';
+import { Form, InputRow } from '../../../theme/forms';
 import { InputContainer } from '../../../components/Input/styles';
 import Button from '../../../components/Button';
 import { PageTitle, Paragraph } from '../../../theme/typography';
@@ -58,7 +60,7 @@ const Register = () => {
                 <Image src={Logo} width={165} height={124} />
 
                 <AuthContent>
-                    <PageTitle font900>Σύνδεση</PageTitle>
+                    <PageTitle font900>Δημιουργία λογαριασμού</PageTitle>
                     <Paragraph>
                         Συμπληρώστε την παρακάτω φόρμα, για να δημιουργήσετε τον
                         λογαριασμό σας.
@@ -69,35 +71,37 @@ const Register = () => {
 
                     <Form onSubmit={submitForm}>
                         {/* Name */}
-                        <InputContainer>
-                            <Input
-                                id="firstName"
-                                type="text"
-                                value={firstName}
-                                onChange={event =>
-                                    setFirstName(event.target.value)
-                                }
-                                required
-                                placeholder="Όνομα"
-                            />
+                        <InputRow>
+                            <InputContainer>
+                                <Input
+                                    id="firstName"
+                                    type="text"
+                                    value={firstName}
+                                    onChange={event =>
+                                        setFirstName(event.target.value)
+                                    }
+                                    required
+                                    placeholder="Όνομα"
+                                />
 
-                            <InputError messages={errors?.name} />
-                        </InputContainer>
+                                <InputError messages={errors?.name} />
+                            </InputContainer>
 
-                        <InputContainer>
-                            <Input
-                                id="lastName"
-                                type="text"
-                                value={lastName}
-                                onChange={event =>
-                                    setLastName(event.target.value)
-                                }
-                                required
-                                placeholder="Επίθετο"
-                            />
+                            <InputContainer>
+                                <Input
+                                    id="lastName"
+                                    type="text"
+                                    value={lastName}
+                                    onChange={event =>
+                                        setLastName(event.target.value)
+                                    }
+                                    required
+                                    placeholder="Επίθετο"
+                                />
 
-                            <InputError messages={errors?.name} />
-                        </InputContainer>
+                                <InputError messages={errors?.name} />
+                            </InputContainer>
+                        </InputRow>
 
                         {/* Email Address */}
                         <InputContainer>
@@ -112,41 +116,65 @@ const Register = () => {
 
                             <InputError messages={errors?.email} />
                         </InputContainer>
+                        <InputRow>
+                            {/* Password */}
+                            <InputContainer>
+                                <Input
+                                    id="password"
+                                    type="password"
+                                    value={password}
+                                    onChange={event =>
+                                        setPassword(event.target.value)
+                                    }
+                                    required
+                                    autoComplete="new-password"
+                                    placeholder="Κωδικός"
+                                />
 
-                        {/* Password */}
-                        <InputContainer>
-                            <Input
-                                id="password"
-                                type="password"
-                                value={password}
-                                onChange={event =>
-                                    setPassword(event.target.value)
-                                }
-                                required
-                                autoComplete="new-password"
-                                placeholder="Κωδικός"
-                            />
+                                <InputError messages={errors?.password} />
+                            </InputContainer>
 
-                            <InputError messages={errors?.password} />
-                        </InputContainer>
+                            {/* Confirm Password */}
+                            <InputContainer>
+                                <Input
+                                    id="passwordConfirmation"
+                                    type="password"
+                                    value={passwordConfirmation}
+                                    onChange={event =>
+                                        setPasswordConfirmation(
+                                            event.target.value,
+                                        )
+                                    }
+                                    required
+                                    placeholder="Επιβεβαίωση κωδικού"
+                                />
 
-                        {/* Confirm Password */}
-                        <InputContainer>
-                            <Input
-                                id="passwordConfirmation"
-                                type="password"
-                                value={passwordConfirmation}
-                                onChange={event =>
-                                    setPasswordConfirmation(event.target.value)
-                                }
-                                required
-                                placeholder="Επιβεβαίωση κωδικού"
-                            />
+                                <InputError
+                                    messages={errors?.password_confirmation}
+                                />
+                            </InputContainer>
+                        </InputRow>
+                        <CheckboxesContainer>
+                            <InputCheckboxContainer>
+                                <label htmlFor="terms">
+                                    <input
+                                        id="terms"
+                                        type="checkbox"
+                                        name="terms"
+                                        required
+                                    />
 
-                            <InputError
-                                messages={errors?.password_confirmation}
-                            />
-                        </InputContainer>
+                                    <span>
+                                        Συμφωνώ με τους{' '}
+                                        <Link href="#!">όρους χρήσης</Link> και
+                                        την{' '}
+                                        <Link href="#!">
+                                            πολιτική απορρήτου
+                                        </Link>
+                                    </span>
+                                </label>
+                            </InputCheckboxContainer>
+                        </CheckboxesContainer>
 
                         <div>
                             <Button
@@ -176,6 +204,7 @@ const Register = () => {
                             width={130}
                             height={160}
                             objectFit="contain"
+                            priority
                         />
                         <p>
                             Lorem ipsum dolor sit amet consectetur adipisicing

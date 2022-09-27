@@ -3,11 +3,10 @@ import AuthSessionStatus from '../components/AuthSessionStatus';
 import GuestLayout from '../components/Layouts/GuestLayout';
 import Input from '../components/Input';
 import InputError from '../components/InputError';
-import Label from '../components/Label';
 import Link from 'next/link';
 import { useAuth } from '../hooks/auth';
 import { useState } from 'react';
-import { ErrorsProps } from '../types';
+import { ErrorsProps } from '../interfaces';
 
 interface AuthProps {
     middleware: string;
@@ -44,7 +43,7 @@ const ForgotPassword = () => {
                 <form onSubmit={submitForm}>
                     {/* Email Address */}
                     <div>
-                        <Label htmlFor="email">Email</Label>
+                        <label htmlFor="email">Email</label>
                         <Input
                             id="email"
                             type="email"

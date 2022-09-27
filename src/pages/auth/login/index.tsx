@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 import AuthSessionStatus from '../../../components/AuthSessionStatus';
 import Logo from '../../../../public/images/logo.svg';
@@ -21,8 +22,8 @@ import {
     CheckboxesContainer,
     InputCheckboxContainer,
 } from '../styles';
-import { ErrorsProps } from '../../../types';
-import { PageTitle, Paragraph } from '../../../theme/typography';
+import { ErrorsProps } from '../../../interfaces';
+import { PageTitle, Paragraph, RowUL } from '../../../theme/typography';
 import { Form } from '../../../theme/forms';
 import { InputContainer } from '../../../components/Input/styles';
 import Button from '../../../components/Button';
@@ -35,12 +36,12 @@ const Login = () => {
         redirectIfAuthenticated: '/dashboard',
     });
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [shouldRemember, setShouldRemember] = useState(false);
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [shouldRemember, setShouldRemember] = useState<boolean>(false);
     const [errors, setErrors] = useState<ErrorsProps>();
     const [status, setStatus] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         if (
@@ -73,9 +74,6 @@ const Login = () => {
     return (
         <AuthLayout>
             <AuthContentContainer>
-                {/* Session Status */}
-                {/* <AuthSessionStatus status={status} /> */}
-
                 <Image src={Logo} width={165} height={124} />
 
                 <AuthContent>
@@ -89,6 +87,8 @@ const Login = () => {
                     </Paragraph>
 
                     <Form onSubmit={submitForm}>
+                        <InputError messages={errors?.email} />
+
                         {/* Email Address */}
                         <InputContainer>
                             <Input
@@ -99,8 +99,6 @@ const Login = () => {
                                 required
                                 placeholder="Email"
                             />
-
-                            <InputError messages={errors?.email} />
                         </InputContainer>
 
                         {/* Password */}
@@ -176,12 +174,14 @@ const Login = () => {
                     </Form>
                 </AuthContent>
 
-                <ul>
+                <RowUL gap={20}>
                     <li>
                         <Link href="#!">Πολιτική απορρήτου</Link>
+                    </li>
+                    <li>
                         <Link href="#!">Όροι χρήσης</Link>
                     </li>
-                </ul>
+                </RowUL>
             </AuthContentContainer>
             <AuthImageContainer>
                 <Image layout="fill" src={AuthImage} priority />
@@ -192,6 +192,7 @@ const Login = () => {
                             width={130}
                             height={160}
                             objectFit="contain"
+                            priority
                         />
                         <p>
                             Lorem ipsum dolor sit amet consectetur adipisicing

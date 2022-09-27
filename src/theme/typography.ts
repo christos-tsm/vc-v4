@@ -15,3 +15,8 @@ export const Paragraph = styled.p`
         fontSize === 'big' ? '25px' : fontSize === 'medium' ? '18px' : '16px'};
     line-height: 30px;
 `;
+
+export const RowUL = styled.ul`
+    display: flex;
+    gap: ${({ gap }: { gap?: number }) => (gap ? gap + 'px' : '0px')};
+`;

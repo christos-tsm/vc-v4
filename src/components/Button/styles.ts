@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 import { theme } from '../../theme';
 
-interface BtnProps {
-    variation: string;
-}
-
 const handleButtonType = (variation: string) => {
     switch (variation) {
         case 'primary':
@@ -29,5 +25,5 @@ export const ButtonEl = styled.button`
     font-weight: 400;
     cursor: pointer;
     transition: all ease-in-out 250ms;
-    ${({ variation }: BtnProps) => handleButtonType(variation)};
+    ${({ variation }: { variation: string }) => handleButtonType(variation)};
 `;

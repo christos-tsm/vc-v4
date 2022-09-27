@@ -9,6 +9,13 @@ export const AuthContentContainer = styled.section`
     height: 100%;
     padding: 50px 0 20px 50px;
     align-items: flex-start;
+
+    ul {
+        a {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+    }
 `;
 
 export const AuthContent = styled.div`
